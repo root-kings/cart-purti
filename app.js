@@ -225,7 +225,7 @@ handlebars = handlebars.create({
 
 // session store
 let store = new MongoStore({
-    uri: process.env.MONGODB_URI || config.databaseConnectionString,
+    uri: process.env.MONGODB_URI || 'mongodb://heroku_xhr4ljlx:p4jd3p9258485j74p6dse9mlg5@ds249267.mlab.com:49267/heroku_xhr4ljlx' ||config.databaseConnectionString,
     collection: 'sessions'
 });
 
