@@ -25,29 +25,29 @@ const ajv = new Ajv({ useDefaults: true });
 let config = common.getConfig();
 
 const baseConfig = ajv.validate(require('./config/baseSchema'), config);
-if(baseConfig === false){
+if (baseConfig === false) {
     console.log(colors.red(`settings.json incorrect: ${ajv.errorsText()}`));
     process.exit(2);
 }
 
 // Validate the payment gateway config
-if(config.paymentGateway === 'paypal'){
+if (config.paymentGateway === 'paypal') {
     const paypalConfig = ajv.validate(require('./config/paypalSchema'), require('./config/paypal.json'));
-    if(paypalConfig === false){
+    if (paypalConfig === false) {
         console.log(colors.red(`PayPal config is incorrect: ${ajv.errorsText()}`));
         process.exit(2);
     }
 }
-if(config.paymentGateway === 'stripe'){
+if (config.paymentGateway === 'stripe') {
     const stripeConfig = ajv.validate(require('./config/stripeSchema'), require('./config/stripe.json'));
-    if(stripeConfig === false){
+    if (stripeConfig === false) {
         console.log(colors.red(`Stripe config is incorrect: ${ajv.errorsText()}`));
         process.exit(2);
     }
 }
-if(config.paymentGateway === 'authorizenet'){
+if (config.paymentGateway === 'authorizenet') {
     const authorizenetConfig = ajv.validate(require('./config/authorizenetSchema'), require('./config/authorizenet.json'));
-    if(authorizenetConfig === false){
+    if (authorizenetConfig === false) {
         console.log(colors.red(`Authorizenet config is incorrect: ${ajv.errorsText()}`));
         process.exit(2);
     }
@@ -72,7 +72,7 @@ app.engine('hbs', handlebars({
     extname: 'hbs',
     layoutsDir: path.join(__dirname, 'views', 'layouts'),
     defaultLayout: 'layout.hbs',
-    partialsDir: [ path.join(__dirname, 'views') ]
+    partialsDir: [path.join(__dirname, 'views')]
 }));
 app.set('view engine', 'hbs');
 
@@ -80,109 +80,109 @@ app.set('view engine', 'hbs');
 handlebars = handlebars.create({
     helpers: {
         perRowClass: (numProducts) => {
-            if(parseInt(numProducts) === 1){
-                return'col-md-12 col-xl-12 col m12 xl12 product-item';
+            if (parseInt(numProducts) === 1) {
+                return 'col-md-12 col-xl-12 col m12 xl12 product-item';
             }
-            if(parseInt(numProducts) === 2){
-                return'col-md-6 col-xl-6 col m6 xl6 product-item';
+            if (parseInt(numProducts) === 2) {
+                return 'col-md-6 col-xl-6 col m6 xl6 product-item';
             }
-            if(parseInt(numProducts) === 3){
-                return'col-md-4 col-xl-4 col m4 xl4 product-item';
+            if (parseInt(numProducts) === 3) {
+                return 'col-md-4 col-xl-4 col m4 xl4 product-item';
             }
-            if(parseInt(numProducts) === 4){
-                return'col-md-3 col-xl-3 col m3 xl3 product-item';
+            if (parseInt(numProducts) === 4) {
+                return 'col-md-3 col-xl-3 col m3 xl3 product-item';
             }
 
-            return'col-md-6 col-xl-6 col m6 xl6 product-item';
+            return 'col-md-6 col-xl-6 col m6 xl6 product-item';
         },
         menuMatch: (title, search) => {
-            if(!title || !search){
-                return'';
+            if (!title || !search) {
+                return '';
             }
-            if(title.toLowerCase().startsWith(search.toLowerCase())){
-                return'class="navActive"';
+            if (title.toLowerCase().startsWith(search.toLowerCase())) {
+                return 'class="navActive"';
             }
-            return'';
+            return '';
         },
         getTheme: (view) => {
-            return`themes/${config.theme}/${view}`;
+            return `themes/${config.theme}/${view}`;
         },
         formatAmount: (amt) => {
-            if(amt){
+            if (amt) {
                 return numeral(amt).format('0.00');
             }
-            return'0.00';
+            return '0.00';
         },
         amountNoDecimal: (amt) => {
-            if(amt){
+            if (amt) {
                 return handlebars.helpers.formatAmount(amt).replace('.', '');
             }
             return handlebars.helpers.formatAmount(amt);
         },
         getStatusColor: (status) => {
-            switch(status){
-            case'Paid':
-                return'success';
-            case'Approved':
-                return'success';
-            case'Approved - Processing':
-                return'success';
-            case'Failed':
-                return'danger';
-            case'Completed':
-                return'success';
-            case'Shipped':
-                return'success';
-            case'Pending':
-                return'warning';
-            default:
-                return'danger';
+            switch (status) {
+                case 'Paid':
+                    return 'success';
+                case 'Approved':
+                    return 'success';
+                case 'Approved - Processing':
+                    return 'success';
+                case 'Failed':
+                    return 'danger';
+                case 'Completed':
+                    return 'success';
+                case 'Shipped':
+                    return 'success';
+                case 'Pending':
+                    return 'warning';
+                default:
+                    return 'danger';
             }
         },
         checkProductOptions: (opts) => {
-            if(opts){
-                return'true';
+            if (opts) {
+                return 'true';
             }
-            return'false';
+            return 'false';
         },
         currencySymbol: (value) => {
-            if(typeof value === 'undefined' || value === ''){
-                return'$';
+            if (typeof value === 'undefined' || value === '') {
+                return '$';
             }
             return value;
         },
         objectLength: (obj) => {
-            if(obj){
+            if (obj) {
                 return Object.keys(obj).length;
             }
             return 0;
         },
         stringify: (obj) => {
-            if(obj){
+            if (obj) {
                 return JSON.stringify(obj);
             }
-            return'';
+            return '';
         },
         checkedState: (state) => {
-            if(state === 'true' || state === true){
-                return'checked';
+            if (state === 'true' || state === true) {
+                return 'checked';
             }
-            return'';
+            return '';
         },
         selectState: (state, value) => {
-            if(state === value){
-                return'selected';
+            if (state === value) {
+                return 'selected';
             }
-            return'';
+            return '';
         },
         isNull: (value, options) => {
-            if(typeof value === 'undefined' || value === ''){
+            if (typeof value === 'undefined' || value === '') {
                 return options.fn(this);
             }
             return options.inverse(this);
         },
         toLower: (value) => {
-            if(value){
+            if (value) {
                 return value.toLowerCase();
             }
             return null;
@@ -191,31 +191,31 @@ handlebars = handlebars.create({
             return moment(date).format(format);
         },
         ifCond: (v1, operator, v2, options) => {
-            switch(operator){
-            case'==':
-                return(v1 === v2) ? options.fn(this) : options.inverse(this);
-            case'!=':
-                return(v1 !== v2) ? options.fn(this) : options.inverse(this);
-            case'===':
-                return(v1 === v2) ? options.fn(this) : options.inverse(this);
-            case'<':
-                return(v1 < v2) ? options.fn(this) : options.inverse(this);
-            case'<=':
-                return(v1 <= v2) ? options.fn(this) : options.inverse(this);
-            case'>':
-                return(v1 > v2) ? options.fn(this) : options.inverse(this);
-            case'>=':
-                return(v1 >= v2) ? options.fn(this) : options.inverse(this);
-            case'&&':
-                return(v1 && v2) ? options.fn(this) : options.inverse(this);
-            case'||':
-                return(v1 || v2) ? options.fn(this) : options.inverse(this);
-            default:
-                return options.inverse(this);
+            switch (operator) {
+                case '==':
+                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                case '!=':
+                    return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+                case '===':
+                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                case '<':
+                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                case '<=':
+                    return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                case '>':
+                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                case '>=':
+                    return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                case '&&':
+                    return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                case '||':
+                    return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                default:
+                    return options.inverse(this);
             }
         },
         isAnAdmin: (value, options) => {
-            if(value === 'true' || value === true){
+            if (value === 'true' || value === true) {
                 return options.fn(this);
             }
             return options.inverse(this);
@@ -225,7 +225,8 @@ handlebars = handlebars.create({
 
 // session store
 let store = new MongoStore({
-    uri: process.env.MONGODB_URI || 'mongodb://heroku_xhr4ljlx:p4jd3p9258485j74p6dse9mlg5@ds249267.mlab.com:49267/heroku_xhr4ljlx' ||config.databaseConnectionString,
+    // uri: process.env.MONGODB_URI || 'mongodb://heroku_xhr4ljlx:p4jd3p9258485j74p6dse9mlg5@ds249267.mlab.com:49267/heroku_xhr4ljlx',
+    uri: config.databaseConnectionString,
     collection: 'sessions'
 });
 
@@ -260,7 +261,7 @@ app.use((req, res, next) => {
 
 // update config when modified
 app.use((req, res, next) => {
-    if(res.configDirty){
+    if (res.configDirty) {
         config = common.getConfig();
         app.config = config;
     }
@@ -295,7 +296,7 @@ app.use((req, res, next) => {
 
 // development error handler
 // will print stacktrace
-if(app.get('env') === 'development'){
+if (app.get('env') === 'development') {
     app.use((err, req, res, next) => {
         console.error(colors.red(err.stack));
         res.status(err.status || 500);
@@ -321,7 +322,7 @@ app.use((err, req, res, next) => {
 
 // Nodejs version check
 const nodeVersionMajor = parseInt(process.version.split('.')[0].replace('v', ''));
-if(nodeVersionMajor < 7){
+if (nodeVersionMajor < 7) {
     console.log(colors.red(`Please use Node.js version 7.x or above. Current version: ${nodeVersionMajor}`));
     process.exit(2);
 }
@@ -333,7 +334,7 @@ app.on('uncaughtException', (err) => {
 
 initDb(config.databaseConnectionString, async (err, db) => {
     // On connection error we display then exit
-    if(err){
+    if (err) {
         console.log(colors.red('Error connecting to MongoDB: ' + err));
         process.exit(2);
     }
@@ -358,7 +359,7 @@ initDb(config.databaseConnectionString, async (err, db) => {
     });
 
     // Set trackStock for testing
-    if(process.env.NODE_ENV === 'test'){
+    if (process.env.NODE_ENV === 'test') {
         config.trackStock = true;
     }
 
@@ -366,20 +367,20 @@ initDb(config.databaseConnectionString, async (err, db) => {
     await addSchemas();
 
     // We index when not in test env
-    if(process.env.NODE_ENV !== 'test'){
-        try{
+    if (process.env.NODE_ENV !== 'test') {
+        try {
             await runIndexing(app);
-        }catch(ex){
+        } catch (ex) {
             console.error(colors.red('Error setting up indexes:' + err));
         }
     }
 
     // Start the app
-    try{
+    try {
         await app.listen(app.get('port'));
         app.emit('appStarted');
         console.log(colors.green('expressCart running on host: http://localhost:' + app.get('port')));
-    }catch(ex){
+    } catch (ex) {
         console.error(colors.red('Error starting expressCart app:' + err));
         process.exit(2);
     }
