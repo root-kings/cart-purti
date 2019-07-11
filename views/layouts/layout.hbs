@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {{#if admin}}
     <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> 
     <!--[if IE]><link rel="SHORTCUT ICON" href="/images/favicon.png"/><![endif]-->
     {{else}}
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -112,7 +113,7 @@
                     {{else}}
                     {{#isNull config.cartLogo}}
                     {{#isNull config.cartTitle}}
-                    <a class="navbar-brand" href="/">Purti</a>
+                    <a href="/"><h2 class="green-text mont " href="/">Purti</h2></a>
                     {{else}}
                     <a class="navbar-brand" href="/">{{config.cartTitle}}</a>
                     {{/isNull}}

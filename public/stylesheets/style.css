@@ -1,13 +1,18 @@
 @import "@material/list/mdc-list";
 @import "@material/menu-surface/mdc-menu-surface";
 @import "@material/menu/mdc-menu";
+*{
+    font-family: 'Montserrat', sans-serif;
+}   
 html {
+    font-family: 'Montserrat', sans-serif;
     position: relative;
     min-height: 100%;
 }
 
 body {
     margin-bottom: 140px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 html, body {
@@ -597,3 +602,8 @@ a {
         margin-bottom: 100px;
     }
 }
+
+.mont{
+    font-family: 'Montserrat', sans-serif;
+}
+
